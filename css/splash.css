@@ -1,0 +1,52 @@
+body{
+    margin: 0%;
+    padding: 0%;
+    background-color: black;
+    color: aliceblue;
+}
+.background{
+    position: fixed;
+    opacity: 0.15;
+    height: 100vh;
+    width: 100%;
+    z-index: -1;
+
+}
+.splash_screen{
+    display: grid;
+    place-items: center;
+    text-align: center;
+    height: 100vh;
+    font-family:"Cabin", sans-serif;
+    line-height: 10px;
+}
+
+.splash_screen .description h1{
+    font-size: 5vw;
+    text-transform: uppercase;
+}
+
+.splash_screen .description p{
+    font-size: 1.5vw;
+}
+
+.splash_screen .redirect{
+    margin-top: 60px;
+}
+
+.splash_screen .redirect button{
+    font-size: 1.6vw;
+    padding:5px 20px;
+    border-radius: 20px;
+    transition: 0.5s;
+    cursor: pointer;
+}
+
+.splash_screen .redirect button:hover{
+    background-color: rgba(47, 255, 89, 0.773);
+    font-style: italic;
+}
+
+.splash_screen .redirect p{
+    display: none;
+}
