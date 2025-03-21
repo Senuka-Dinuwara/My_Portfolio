@@ -3,10 +3,11 @@ body{
     padding: 0%;
     background-color: black;
     color: aliceblue;
+    user-select: none;
 }
 .background{
     position: fixed;
-    opacity: 0.15;
+    opacity: 0.18;
     height: 100vh;
     width: 100%;
     z-index: -1;
@@ -33,7 +34,11 @@ body{
 .splash_screen .redirect{
     margin-top: 60px;
 }
-
+.splash_screen .redirect .redirect_button{
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
 .splash_screen .redirect button{
     font-size: 1.6vw;
     padding:5px 20px;
@@ -44,9 +49,25 @@ body{
 
 .splash_screen .redirect button:hover{
     background-color: rgba(47, 255, 89, 0.773);
+    text-shadow: 0 1px 2px aliceblue;
     font-style: italic;
+}
+
+.splash_screen .redirect .loading{
+    display: none;
+    border: 8px solid #f3f3f3;
+    border-top: 8px solid rgba(0, 0, 0, 0.773);
+    border-radius: 50%;
+    width: 1.6vw;
+    height: 1.6vw;
+    animation: load 1s linear infinite;
 }
 
 .splash_screen .redirect p{
     display: none;
+}
+
+@keyframes load{
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }

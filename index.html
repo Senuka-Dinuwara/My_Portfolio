@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/splash.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/nav.css">
+    <link rel="stylesheet" href="css/footer.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cabin:ital,wght@0,400..700;1,400..700&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
@@ -17,16 +20,60 @@
     </div>
     <main class="splash_screen">
         <div class="content">
-        <div class="description">
-            <h1>Welcome To My Portfolio</h1>
-            <p>Explore my journey in programming, problem-solving, and software development.</p>
+            <div class="description">
+                <h1>Welcome To My Portfolio</h1>
+                <p>Explore my journey in programming, problem-solving, and software development.</p>
+            </div>
+            <div class="redirect">
+                <div class="redirect_button">
+                    <button id="button_redirect" onclick="Explore_Now()">Explore Now</button>
+                    <div class="loading show_redirect"></div>
+                </div>
+                <p class="redirect_massage">redirect in ...</p>
+            </div>
         </div>
-        <div class="redirect">
-            <a href="home.html">
-                <button>Explore Now</button>
-            </a>
-            <p class="redirect_massage">redirect in ...</p>
-        </div></div>
     </main>
+    <main class="main_screen">
+        <nav class="navbar">
+            <a class="home" href="#Home">Home</a>
+            <a class="education" href="#Education">Education</a>
+            <a class="techskills" href="#TechSkills">TechSkills</a>
+            <a class="projects" href="#Projects">Projects</a>
+            <a class="activities" href="#Activities">Activities</a>
+            <a class="contact" href="#Contact">Contact</a>
+        </nav>
+        <div class="content">
+            <div class="material" id="Home"></div>
+            <div class="material" id="Education"></div>
+            <div class="material" id="TechSkills"></div>
+            <div class="material" id="Projects"></div>
+            <div class="material" id="Activities"></div>
+            <div class="material" id="Contact">
+                <h2>Contact Me</h2>
+                <div class="contact_cards">
+                    <div class=" contact_card email">
+                        <a href="mailto:senudinubro@gmail.com">
+                            <img src="resources/Icons/email.png" tag="email-icon">
+                            <h3>Email</h3>
+                        </a>
+                    </div>
+                    <div class="contact_card LinedIn">
+                        <a href="https://www.linkedin.com/in/senuka-dinuwara/">
+                            <img src="resources/Icons/linkedin.png" tag="linkedin-icon">
+                            <h3>LinkedIn</h3>
+                        </a>
+                    </div>
+                    <div class="contact_card Instagram">
+                        <a href="https://www.instagram.com/codespectral/profilecard/?igsh=c2gwbncxMWVnZDR3">
+                            <img src="resources/Icons/instagram.png" tag="instagram-icon">
+                            <h3>Instagram</h3>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <script src="js/splash.js"></script>
+    <script src="js/main.js"></script>
 </body>
 </html>

@@ -1,0 +1,30 @@
+.navbar{
+    display: flex;
+    justify-content: space-between;
+    justify-items: center;
+    padding: 15px 2%;
+    font-size: 1.6vw;
+    background-color: black;
+    box-shadow: 0 2px 4px aliceblue;
+}
+
+.navbar a{
+    text-decoration: none;
+    font-family:"Cabin", sans-serif;
+    padding: 10px 15px;
+    color: inherit;
+}
+
+.navbar a:hover {
+    background-color: rgba(47, 255, 89, 0.773);
+    color: black;
+    border-radius: 50px;
+}
+
+.navbar .home {
+    margin-right: auto;
+}
+
+.navbar .contact {
+    margin-left: auto;
+}

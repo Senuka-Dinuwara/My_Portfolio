@@ -1,0 +1,49 @@
+.main_screen{
+    display: none;
+}
+
+.main_screen .material h2{
+    display: flex;
+    justify-content: center;
+    font-size: max(3vw);
+}
+
+.contact_cards{
+    margin-top: 5%;
+    display: flex;
+    justify-content: center;
+    gap: 10%;
+}
+
+.contact_card{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    padding: 20px 10px 0 10px;
+    background: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+    width: 15vw;
+    border-radius: 20px;
+}
+
+.contact_card a{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    text-decoration: none;
+}
+
+.contact_card h3{
+    text-align: center;
+    color: aliceblue;
+    font-size: max(2vw);
+    margin-top: 10px;
+}
+
+.contact_card img{
+    width: auto;
+    max-height: 6.5vw;
+    padding: 10px;
+}
