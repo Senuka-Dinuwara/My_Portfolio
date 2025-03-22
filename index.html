@@ -37,43 +37,70 @@
         <nav class="navbar">
             <a class="home" href="#Home">Home</a>
             <a class="education" href="#Education">Education</a>
-            <a class="techskills" href="#TechSkills">TechSkills</a>
+            <a class="skills" href="#Skills">Skills</a>
+            <a class="certifications" href="#Certifications">Certifications</a>
             <a class="projects" href="#Projects">Projects</a>
-            <a class="activities" href="#Activities">Activities</a>
+            <!--<a class="activities" href="#Activities">Activities</a>-->
             <a class="contact" href="#Contact">Contact</a>
         </nav>
         <div class="content">
             <div class="material" id="Home"></div>
             <div class="material" id="Education"></div>
-            <div class="material" id="TechSkills"></div>
-            <div class="material" id="Projects"></div>
-            <div class="material" id="Activities"></div>
+            <div class="material" id="Skills"></div>
+            <div class="material" id="Certifications">
+                <h2>Certifications</h2>
+                <div id="certificates-container" class="carousel-container">
+                    <div id="carousel" class="carousel">
+                        <!-- Images will be added dynamically -->
+                    </div>
+            </div>
+            <div class="material" id="Projects">
+                <h2>Projects</h2>
+                <div class="project_cards">
+                    <section class="project_card pro1">
+                        <img src="https://via.placeholder.com/150" alt="Project 1">
+                        <h3>Project One</h3>
+                        <p>This is a brief description of Project One. It showcases the main features and technologies used.</p>
+                    </section>
+                    <section class="project_card pro2">
+                        <img src="https://via.placeholder.com/150" alt="Project 2">
+                        <h3>Project Two</h3>
+                        <p>This is a brief description of Project Two. It highlights the unique aspects and functionalities.</p>
+                    </section>
+                    <section class="project_card pro3">
+                        <img src="https://via.placeholder.com/150" alt="Project 3">
+                        <h3>Project Three</h3>
+                        <p>This is a brief description of Project Three. It focuses on the project goals and outcomes.</p>
+                    </section>
+                    <section class="project_card pro4">
+                        <img src="https://via.placeholder.com/150" alt="Project 4">
+                        <h3>Project Four</h3>
+                        <p>This is a brief description of Project Four. It explains the technologies and team involved.</p>
+                    </section>
+                </div>                
+            </div>
+            <!--<div class="material" id="Activities"></div>-->
             <div class="material" id="Contact">
                 <h2>Contact Me</h2>
                 <div class="contact_cards">
-                    <div class=" contact_card email">
-                        <a href="mailto:senudinubro@gmail.com">
-                            <img src="resources/Icons/email.png" tag="email-icon">
-                            <h3>Email</h3>
-                        </a>
-                    </div>
-                    <div class="contact_card LinedIn">
-                        <a href="https://www.linkedin.com/in/senuka-dinuwara/">
-                            <img src="resources/Icons/linkedin.png" tag="linkedin-icon">
-                            <h3>LinkedIn</h3>
-                        </a>
-                    </div>
-                    <div class="contact_card Instagram">
-                        <a href="https://www.instagram.com/codespectral/profilecard/?igsh=c2gwbncxMWVnZDR3">
-                            <img src="resources/Icons/instagram.png" tag="instagram-icon">
-                            <h3>Instagram</h3>
-                        </a>
-                    </div>
+                    <a class="contact_card Email" href="mailto:senudinubro@gmail.com">
+                        <img src="resources/Icons/email.png" tag="email-icon">
+                        <h3>Email</h3>
+                    </a>
+                    <a class="contact_card LinedIn" href="https://www.linkedin.com/in/senuka-dinuwara/">
+                        <img src="resources/Icons/linkedin.png" tag="linkedin-icon">
+                        <h3>LinkedIn</h3>
+                    </a>
+                    <a class="contact_card Instagram" href="https://www.instagram.com/codespectral/profilecard/?igsh=c2gwbncxMWVnZDR3">
+                        <img src="resources/Icons/instagram.png" tag="instagram-icon">
+                        <h3>Instagram</h3>
+                    </a>
                 </div>
             </div>
         </div>
     </main>
     <script src="js/splash.js"></script>
     <script src="js/main.js"></script>
+    <script src="js/certificate.js"></script>
 </body>
 </html>

@@ -48,7 +48,7 @@ body{
 }
 
 .splash_screen .redirect button:hover{
-    background-color: rgba(47, 255, 89, 0.773);
+    background: linear-gradient(180deg, springgreen, rgb(65, 144, 255));
     text-shadow: 0 1px 2px aliceblue;
     font-style: italic;
 }

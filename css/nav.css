@@ -12,13 +12,16 @@
     text-decoration: none;
     font-family:"Cabin", sans-serif;
     padding: 10px 15px;
+    border-radius: 10px;
     color: inherit;
+    transition: 0.8s;
 }
 
 .navbar a:hover {
-    background-color: rgba(47, 255, 89, 0.773);
+    background: linear-gradient(180deg, springgreen, rgb(65, 144, 255));
     color: black;
     border-radius: 50px;
+    transition: 0.8s;
 }
 
 .navbar .home {

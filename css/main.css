@@ -1,5 +1,6 @@
 .main_screen{
     display: none;
+    overflow-y: hidden;
 }
 
 .main_screen .material h2{
@@ -8,42 +9,88 @@
     font-size: max(3vw);
 }
 
-.contact_cards{
-    margin-top: 5%;
-    display: flex;
-    justify-content: center;
-    gap: 10%;
-}
-
-.contact_card{
+.project_cards, .contact_cards{
+    margin: 3% 2% 0 2%;
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
+}
+
+.project_card, .contact_card{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    text-decoration: none;
     padding: 20px 10px 0 10px;
     background: rgba(255, 255, 255, 0.2);
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
     backdrop-filter: blur(10px);
-    width: 15vw;
     border-radius: 20px;
+    margin-top: 2%;
 }
 
-.contact_card a{
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    flex-wrap: nowrap;
-    text-decoration: none;
-}
-
-.contact_card h3{
+.project_card h3, .contact_card h3{
     text-align: center;
     color: aliceblue;
     font-size: max(2vw);
     margin-top: 10px;
 }
 
-.contact_card img{
-    width: auto;
-    max-height: 6.5vw;
+.carousel-container {
+    display: flex;
+    justify-content: center;
+    width: 100%; /* Show 3 images at a time */
+    margin-top: 20px;
+}
+
+.carousel {
+    display: flex;
+    transition: 3s;
+}
+
+.certificate-img {
+    width: 400px; /* Adjust the size of each image */
+    height: 300px;
+    border-radius: 5px;
+    margin-right: 20px; /* Space between images */
+    transform: perspective(1000px) rotateY(0deg); /* 3D effect */
+    opacity: 0.9;
+}
+
+.project_cards{
+    gap: 3%;
+}
+
+.project_card{
+    width: 20vw;
+}
+
+.project_card img{
+    align-self: center;
+    max-width: fit-content;
+    max-height: 6vw;
     padding: 10px;
+}
+
+.contact_cards{
+    gap: 10%;
+}
+
+.contact_card{
+    width: 15vw;
+}
+
+.contact_card img{
+    align-self: center;
+    max-width: 6vw;
+    max-height: 6vw;
+    padding: 10px;
+}
+
+.contact_card:hover h3{
+    background: linear-gradient(180deg, springgreen, rgb(65, 144, 255));
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    transition: 0.5s;
 }
