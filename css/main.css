@@ -6,17 +6,51 @@
 .main_screen .material h2{
     display: flex;
     justify-content: center;
-    font-size: max(3vw);
+    font-size: 2.5rem;
 }
 
-.project_cards, .contact_cards{
+.noContent{
+    display: flex;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    font-size: 1.4rem;
+    margin: 0 5%;
+    padding: 30px 0;
+    border-radius: 10px;
+}
+
+.certificate-container {
+    display: flex;
+    justify-content: center;
+    width: 100%; /* Show 3 images at a time */
+    margin-top: 20px;
+}
+
+.certificate {
+    display: flex;
+}
+
+.certificate-img {
+    width: 400px; /* Adjust the size of each image */
+    height: 300px;
+    padding: 5px;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    border-radius: 5px;
+    margin: 0 10px; /* Space between images */
+    transform: perspective(1000px) rotateY(0deg); /* 3D effect */
+    opacity: 0.9;
+}
+
+.contact_cards{
     margin: 3% 2% 0 2%;
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
 }
 
-.project_card, .contact_card{
+.contact_card{
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
@@ -29,47 +63,11 @@
     margin-top: 2%;
 }
 
-.project_card h3, .contact_card h3{
+.contact_card h3{
     text-align: center;
     color: aliceblue;
     font-size: max(2vw);
     margin-top: 10px;
-}
-
-.carousel-container {
-    display: flex;
-    justify-content: center;
-    width: 100%; /* Show 3 images at a time */
-    margin-top: 20px;
-}
-
-.carousel {
-    display: flex;
-    transition: 3s;
-}
-
-.certificate-img {
-    width: 400px; /* Adjust the size of each image */
-    height: 300px;
-    border-radius: 5px;
-    margin-right: 20px; /* Space between images */
-    transform: perspective(1000px) rotateY(0deg); /* 3D effect */
-    opacity: 0.9;
-}
-
-.project_cards{
-    gap: 3%;
-}
-
-.project_card{
-    width: 20vw;
-}
-
-.project_card img{
-    align-self: center;
-    max-width: fit-content;
-    max-height: 6vw;
-    padding: 10px;
 }
 
 .contact_cards{
