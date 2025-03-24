@@ -1,16 +1,5 @@
 const projects = [
-    {   img: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/11/Test-Logo.svg/783px-Test-Logo.svg.png",
-        title: "test1"
-    },
-    {   img: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/11/Test-Logo.svg/783px-Test-Logo.svg.png",
-        title: "test2"
-    },
-    {   img: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/11/Test-Logo.svg/783px-Test-Logo.svg.png",
-        title: "test3"
-    },
-    {   img: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/11/Test-Logo.svg/783px-Test-Logo.svg.png",
-        title: "test4"
-    }
+    
 ];
 
 function displayProjects() {
