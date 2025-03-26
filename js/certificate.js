@@ -39,10 +39,6 @@ function updateCertificate() {
         certificate.appendChild(imgElement);
     }
 
-    // Trigger CSS animation for sliding effect
-    // certificate.classList.remove("animate"); // Reset animation
-    // void certificate.offsetWidth; // Trigger reflow to restart animation
-    // certificate.classList.add("animate"); // Apply animation
 }
 
 // Call the function on page load
