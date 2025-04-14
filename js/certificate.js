@@ -31,7 +31,7 @@ function updateCertificate() {
     certificate.innerHTML = ""; // Clear existing images
 
     // Add 3 images in the certificate
-    for (let i = 0; i < 4; i++) {
+    for (let i = 0; i < 2; i++) {
         const imgIndex = (currentIndex + i) % certificates.length;
         const imgElement = document.createElement("img");
         imgElement.src = certificates[imgIndex];

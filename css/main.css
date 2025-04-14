@@ -4,7 +4,7 @@
 }
 
 .main_screen .material{
-    margin-bottom: 50px;
+    padding-top:90px ;
 }
 
 .main_screen .material h2{
@@ -12,6 +12,7 @@
     justify-content: center;
     font-size: 2.5rem;
 }
+
 .skill-container{
     display: flex;
     justify-content: space-evenly;
@@ -25,20 +26,29 @@
 }
 
 .skill-container .Technical-Skills{
-    width: max(50%, 600px);
+    width: max(50%, 620px);
+}
+
+.skill-container .Professional-Skills{
+    width: max(38%, 400px); ;
 }
 
 .skill img{
-    width: 80px;
     padding: 10px;
+}
+
+.Technical-Skills .skill img{
+    width: 100px;
+}
+
+.Professional-Skills .skill img{
+    width: 80px;
 }
 
 .skill h4{
     margin-top: 0;
-}
-
-.skill-container .Professional-Skills{
-    width: max(40%, 600px); ;
+    padding: 0 10px;
+    font-size: 1.1rem;
 }
 
 .skill-container h3{
@@ -62,7 +72,7 @@
 .certificate-container {
     display: flex;
     justify-content: center;
-    width: 100%; /* Show 3 images at a time */
+    width: 100%;
     margin-top: 20px;
 }
 
@@ -71,14 +81,14 @@
 }
 
 .certificate-img {
-    width: 400px; /* Adjust the size of each image */
-    height: 300px;
+    width: 650px;
+    height: 500px;
     padding: 5px;
     background: rgba(255, 255, 255, 0.2);
     backdrop-filter: blur(10px);
     border-radius: 5px;
-    margin: 0 10px; /* Space between images */
-    transform: perspective(1000px) rotateY(0deg); /* 3D effect */
+    margin: 0 10px;
+    transform: perspective(1000px) rotateY(0deg);
     opacity: 0.9;
 }
 
@@ -89,11 +99,12 @@
 .noContent h3{
     display: flex;
     justify-content: center;
+    text-align: center;
     background: rgba(255, 255, 255, 0.2);
     backdrop-filter: blur(10px);
     font-size: 1.5rem;
     margin: 0 5%;
-    padding: 30px 0;
+    padding: 30px 20px;
     border-radius: 10px;
 }
 
@@ -120,6 +131,7 @@
 .contact_cards{
     margin: 3% 2% 0 2%;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     flex-wrap: wrap;
 }

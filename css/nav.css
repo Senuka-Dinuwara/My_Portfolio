@@ -1,11 +1,14 @@
 .navbar{
     display: flex;
+    position: fixed;
+    width: 96vw;
     justify-content: space-between;
     justify-items: center;
     padding: 15px 2%;
     font-size: 1.6vw;
     background-color: black;
     box-shadow: 0 2px 4px aliceblue;
+    z-index: 3;
 }
 
 .navbar a{
@@ -18,8 +21,9 @@
 }
 
 .navbar a:hover {
-    background: linear-gradient(180deg, springgreen, rgb(65, 144, 255));
-    color: black;
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+    color: #000;
     border-radius: 50px;
     transition: 0.8s;
 }

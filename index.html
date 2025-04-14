@@ -10,7 +10,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cabin:ital,wght@0,400..700;1,400..700&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-    <title>Welcome</title>
+    <title>Senuka Dinuwara</title>
 </head>
 <body>
     <div class="background">
@@ -46,7 +46,12 @@
         </nav>
         <div class="content">
             <div class="material" id="Home"></div>
-            <div class="material" id="Education"></div>
+            <div class="material" id="About">
+                <h2>About Me</h2>
+            </div>
+            <div class="material" id="Education">
+                <h2>Education</h2>
+            </div>
             <div class="material" id="Skills">
                 <h2>Skills</h2>
                 <div id="skills-container" class="skill-container">
@@ -83,19 +88,40 @@
             <!--<div class="material" id="Activities"></div>-->
             <div class="material" id="Contact">
                 <h2>Contact Me</h2>
-                <div class="contact_cards">
-                    <a class="contact_card Email" href="mailto:senudinubro@gmail.com">
-                        <img src="resources/Icons/email.png" tag="email-icon">
-                        <h3>Email</h3>
-                    </a>
-                    <a class="contact_card LinedIn" href="https://www.linkedin.com/in/senuka-dinuwara/">
-                        <img src="resources/Icons/linkedin.png" tag="linkedin-icon">
-                        <h3>LinkedIn</h3>
-                    </a>
-                    <a class="contact_card Instagram" href="https://www.instagram.com/codespectral/profilecard/?igsh=c2gwbncxMWVnZDR3">
-                        <img src="resources/Icons/instagram.png" tag="instagram-icon">
-                        <h3>Instagram</h3>
-                    </a>
+                <div class="contact_main">
+                    <div class="contact_form">
+                        <form id="contactForm">
+                            <legend>Contact Form</legend>
+                            
+                            <label for="fname">First Name</label>
+                            <input id="fname" type="text" placeholder="Enter your First Name" required>
+                            
+                            <label for="lname">Last Name</label>
+                            <input id="lname" type="text" placeholder="Enter your Last Name" required>
+                            
+                            <label for="number">Contact</label>
+                            <input id="number" type="tel" placeholder="Enter your Contact number" required>
+                            
+                            <label for="email">Email</label>
+                            <input id="email" type="email" placeholder="Enter your Email" required>
+                            
+                            <label for="note">Note</label>
+                            <input id="note" type="text" placeholder="Enter your Notes">
+
+                            <input type="reset" value="Clear">
+                            <input type="submit" value="Send">
+                        </form>
+                    </div>
+                    <!--<div class="contact_cards">
+                        <a class="contact_card LinedIn" href="https://www.linkedin.com/in/senuka-dinuwara/">
+                            <img src="resources/Icons/linkedin.png" tag="linkedin-icon">
+                            <h3>LinkedIn</h3>
+                        </a>
+                        <a class="contact_card Instagram" href="https://www.instagram.com/codespectral/profilecard/?igsh=c2gwbncxMWVnZDR3">
+                            <img src="resources/Icons/instagram.png" tag="instagram-icon">
+                            <h3>Instagram</h3>
+                        </a>
+                    </div>-->
                 </div>
             </div>
         </div>
