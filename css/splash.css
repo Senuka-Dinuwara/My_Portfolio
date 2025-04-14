@@ -54,7 +54,6 @@ body{
 }
 
 .splash_screen .redirect .loading{
-    display: none;
     border: 8px solid #f3f3f3;
     border-top: 8px solid rgba(0, 0, 0, 0.773);
     border-radius: 50%;
