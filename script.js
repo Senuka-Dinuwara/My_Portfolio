@@ -1,4 +1,11 @@
 AOS.init({ duration: 1000, once: true });
+
+// Preloader
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    document.getElementById('preloader').classList.add('hide');
+  }, 900);
+});
 	
 // Animate skill bars when they enter viewport
 const observer = new IntersectionObserver((entries) => {
