@@ -1,9 +1,0 @@
-.footer{
-    display: flex;
-    justify-content: space-between;
-    justify-items: center;
-    padding: 15px 2%;
-    font-size: 1.1rem;
-    margin-top: 50px;
-    background-color: black;
-}
