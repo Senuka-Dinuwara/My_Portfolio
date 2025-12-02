@@ -31,7 +31,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
   <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-  
+  <link href="style.css" rel="stylesheet">
+
   <script>
     AOS.init({
       once: true,
@@ -39,28 +40,7 @@
       easing: 'ease-out-cubic'
     });
   </script>
-
-  <style>
-    .glass { backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); }
-    .glow { text-shadow: 0 0 20px rgba(0,255,255,0.6); }
-    .project-card { transition: all 0.5s ease; }
-    .project-card:hover { transform: translateY(-12px); box-shadow: 0 25px 50px rgba(139,92,246,0.4); }
-
-    @keyframes blob {
-      0% { transform: translate(0px, 0px) scale(1); }
-      33% { transform: translate(30px, -50px) scale(1.1); }
-      66% { transform: translate(-20px, -30px) scale(0.9); }
-      100% { transform: translate(0px, 0px) scale(1); }
-    }
-    @keyframes float {
-      0%, 100% { transform: translateY(0); opacity: 0.4; }
-      50% { transform: translateY(-80px); opacity: 0.8; }
-    }
-    .animate-blob { animation: blob 20s infinite; }
-    .animation-delay-2000 { animation-delay: 2s; }
-    .animation-delay-4000 { animation-delay: 4s; }
-    .animate-float { animation: float 15s infinite ease-in-out; }
-  </style>
+  
 </head>
 
 <body class="bg-bg text-white min-h-screen overflow-x-hidden" x-data="{ mobileMenu: false }">
@@ -428,28 +408,6 @@
   </div>
 </section>
 
-<!-- Animation Script (Add before </body>) -->
-<script>
-  // Animate skill bars when they enter viewport
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        const bars = entry.target.querySelectorAll('.skill-bar');
-        bars.forEach(bar => {
-          const width = bar.getAttribute('data-width');
-          setTimeout(() => {
-            bar.style.width = width;
-          }, 100);
-        });
-      }
-    });
-  }, { threshold: 0.5 });
-
-  document.querySelectorAll('.skill-item').forEach(item => {
-    observer.observe(item);
-  });
-</script>
-
 <!-- 5. PROJECTS - WITH PROGRESS + TYPE BADGES -->
 <section id="projects" class="py-20 lg:py-32 bg-bg">
   <div class="max-w-7xl mx-auto px-6">
@@ -725,28 +683,7 @@
     <p class="text-gray-400">© 2025 Senuka Dinuwara. All rights reserved.</p>
   </footer>
 
-  <script>
-    AOS.init({ duration: 1000, once: true });
-	
-	// Remove #id from URL without breaking smooth scroll or page position
-	document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-	anchor.addEventListener('click', function(e) {
-    const targetId = this.getAttribute('href');
-
-    if (targetId !== '#' && targetId.startsWith('#')) {
-      e.preventDefault();
-
-      const targetElement = document.querySelector(targetId);
-
-      if (targetElement) {
-        targetElement.scrollIntoView({
-          behavior: 'smooth'
-        });
-        history.replaceState(null, null, ' ');
-      }
-    }
-  });
-});
-  </script>
+  
+  <script src="script.js"></script>
 </body>
 </html>
