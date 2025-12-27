@@ -76,7 +76,6 @@
         <a href="#projects" class="hover:text-primary">Projects</a>
         <a href="#certificates" class="hover:text-primary">Certificates</a>
         <a href="#activities" class="hover:text-primary">Activities</a>
-        <a href="#resume" class="hover:text-primary">Resume</a>
         <a href="#contact" class="hover:text-primary">Contact</a>
       </div>
       <button @click="mobileMenu = !mobileMenu" class="md:hidden text-2xl"><i class="fas fa-bars"></i></button>
@@ -90,7 +89,6 @@
         <a href="#projects" @click="mobileMenu=false" class="hover:text-primary">Projects</a>
         <a href="#certificates" @click="mobileMenu=false" class="hover:text-primary">Certificates</a>
         <a href="#activities" @click="mobileMenu=false" class="hover:text-primary">Activities</a>
-        <a href="#resume" @click="mobileMenu=false" class="hover:text-primary">Resume</a>
         <a href="#contact" @click="mobileMenu=false" class="hover:text-primary">Contact</a>
       </div>
     </div>
@@ -114,109 +112,122 @@
   </section>
 
   <!-- 2. ABOUT -->
-  <section id="about" class="py-16 md:py-24 lg:py-32 bg-card/40 overflow-hidden">
-    <div class="max-w-6xl mx-auto px-6 sm:px-8">
+  <section id="about" class="py-16 md:py-24 lg:py-32 bg-card/20 overflow-hidden relative">
+    <div class="max-w-screen-2xl mx-auto px-6 sm:px-8">
 
-      <!-- Heading - fades in with scale -->
+      <!-- Enhanced background for uniqueness: abstract tech-inspired pattern -->
+      <div class="absolute inset-0 opacity-10 pointer-events-none bg-[radial-gradient(circle_at_50%_50%,var(--primary)_0%,transparent_50%)] 
+                  mix-blend-overlay">
+        <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgogIDxmaWx0ZXIgaWQ9Im5vaXNlRmlsdGVyIj4KICAgIDxmZVR1cmJ1bGVuY2UgdHlwZT0iZnJhY3RhbE5vaXNlIiBiYXNlRnJlcXVlbmN5PSIwLjY1IiBudW1PY3RhdmVzPSIzIiBzdGl0Y2hUaWxlcz0ic3RpdGNoIiAvPgogIDwvZmlsdGVyPgogIDxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbHRlcj0idXJsKCNub2lzZUZpbHRlcikiIC8+Cjwvc3ZnPg==')] opacity-30"></div>
+      </div>
+
+      <!-- Heading with unique animation: letter spacing reveal -->
       <h2 class="text-center text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black mb-12 md:mb-20 
-                bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent"
-          data-aos="fade-up"
-          data-aos-duration="1000"
+                bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent tracking-tighter"
+          data-aos="zoom-in"
+          data-aos-duration="800"
           data-aos-once="true">
-        About Me
+        Discover My Journey
       </h2>
 
-      <!-- Main Grid -->
-      <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 xl:gap-20 items-center">
+      <!-- Main Grid with asymmetric layout for uniqueness -->
+      <div class="grid lg:grid-cols-[1fr_1.2fr] gap-12 lg:gap-16 xl:gap-20 items-start">
 
-        <!-- Photo Column - slides in from left -->
-        <div class="flex justify-center order-1 lg:order-1"
+        <!-- Photo Column with unique polygon clip-path and tilt effect -->
+        <div class="flex flex-col items-center order-1 lg:order-1 relative"
             data-aos="fade-right"
-            data-aos-delay="200"
-            data-aos-duration="1200"
+            data-aos-duration="1000"
             data-aos-once="true">
-          <div class="relative group">
-            <!-- Main circular image -->
+          <div class="relative group transform -rotate-3 transition-transform duration-500 hover:rotate-0">
+            <!-- Polygon-shaped image -->
             <div class="w-64 h-64 sm:w-72 sm:h-72 md:w-80 md:h-80 lg:w-96 lg:h-96 
-                        rounded-full overflow-hidden 
-                        ring-4 ring-primary/10 ring-offset-4 ring-offset-background 
-                        shadow-2xl transition-all duration-500">
+                        overflow-hidden 
+                        clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+                        ring-2 ring-primary/30 ring-offset-2 ring-offset-background 
+                        shadow-lg transition-all duration-300 hover:shadow-xl">
               <img 
                 src="resources/profile.webp" 
                 alt="Your Name"
-                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                 loading="lazy"
               >
             </div>
 
-            <!-- Subtle glow ring -->
-            <div class="absolute -inset-2 md:-inset-4 rounded-full 
+            <!-- Dynamic glow with rotation -->
+            <div class="absolute -inset-2 rounded-full 
                         bg-gradient-to-r from-primary to-accent opacity-0 
-                        group-hover:opacity-20 blur-3xl transition-opacity duration-700 -z-10"></div>
+                        group-hover:opacity-20 blur-2xl transition-opacity duration-500 -z-10 
+                        animate-spin-slow"></div>
+          </div>
+
+          <!-- Download Resume Button with unique particle effect on hover (via CSS) -->
+          <div class="mt-8 md:mt-10 flex justify-center"
+              data-aos="fade-up"
+              data-aos-duration="700"
+              data-aos-once="true">
+            <a href="resources/resume.pdf" 
+               download
+               class="relative inline-flex items-center px-6 py-3 md:px-8 md:py-4 
+                 btn-glass font-semibold text-base md:text-lg 
+                 rounded-full shadow-md overflow-hidden 
+                 transition-all duration-300 
+                 hover:shadow-xl hover:scale-105 
+                 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2">
+              <span class="relative z-10">Download Resume</span>
+              <span class="relative z-10 ml-2 text-xl">↓</span>
+              <!-- Particle background -->
+              <div class="absolute inset-0 bg-[radial-gradient(circle_at_50%_120%,rgba(255,255,255,0.2),transparent)] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            </a>
           </div>
         </div>
 
-        <!-- Text Column - slides in from right + staggered bullet animation -->
-        <div class="space-y-8 md:space-y-10 order-2 lg:order-2 text-center lg:text-left"
-            data-aos="fade-left"
-            data-aos-delay="400"
-            data-aos-duration="1200"
-            data-aos-once="true">
+        <!-- Text Column with staggered cards for uniqueness -->
+        <div class="order-2 lg:order-2 text-center lg:text-left">
+          <!-- Intro as a highlighted card -->
+          <div class="mb-6 md:mb-8 p-6 bg-background/50 rounded-2xl shadow-md border border-primary/10"
+              data-aos="fade-left"
+              data-aos-duration="1000"
+              data-aos-once="true">
+            <p class="text-lg sm:text-xl md:text-2xl leading-relaxed text-foreground/90">
+              Second-year Computer Science innovator at the 
+              <span class="font-semibold text-primary">University of Westminster (IIT Campus)</span>.<br class="hidden sm:inline">
+              Crafting code that bridges ideas to reality with precision and creativity.
+            </p>
+          </div>
 
-          <!-- Intro paragraph -->
-          <p class="text-lg sm:text-xl md:text-xl md:text-2xl leading-relaxed text-foreground/90"
-            data-aos="fade-up"
-            data-aos-delay="600"
-            data-aos-duration="1000"
-            data-aos-once="true">
-            2nd-year Computer Science student at the 
-            <span class="font-bold text-primary">University of Westminster (IIT Campus)</span>.<br class="hidden sm:inline">
-            I build real-world applications with clean code and thoughtful, user-centered design.
-          </p>
-
-          <!-- Bullet points - each appears one by one -->
-          <ul class="space-y-4 sm:space-y-5 text-base sm:text-lg md:text-xl text-foreground/80">
-            <li class="flex items-start gap-4"
+          <!-- Bullet points as stacked, offset cards -->
+          <div class="space-y-4">
+            <div class="p-4 bg-background/40 rounded-xl shadow-sm transform translate-x-4 border-l-4 border-primary"
                 data-aos="fade-up"
-                data-aos-delay="700"
-                data-aos-duration="800"
+                data-aos-duration="700"
                 data-aos-once="true">
-              <span class="text-primary text-2xl mt-0.5 font-bold">→</span>
-              <span>Passionate about turning ideas into functional, beautiful products</span>
-            </li>
-            <li class="flex items-start gap-4"
+              <span class="block text-base sm:text-lg md:text-xl text-foreground/80">Igniting concepts into sleek, scalable tech</span>
+            </div>
+            <div class="p-4 bg-background/40 rounded-xl shadow-sm transform -translate-x-4 border-r-4 border-accent"
                 data-aos="fade-up"
-                data-aos-delay="800"
-                data-aos-duration="800"
+                data-aos-duration="700"
                 data-aos-once="true">
-              <span class="text-primary text-2xl mt-0.5 font-bold">→</span>
-              <span>Strong in Python • Java • JavaScript • HTML/CSS</span>
-            </li>
-            <li class="flex items-start gap-4"
+              <span class="block text-base sm:text-lg md:text-xl text-foreground/80">Mastering Python, Java, JavaScript, HTML/CSS</span>
+            </div>
+            <div class="p-4 bg-background/40 rounded-xl shadow-sm transform translate-x-4 border-l-4 border-primary"
                 data-aos="fade-up"
-                data-aos-delay="900"
-                data-aos-duration="800"
+                data-aos-duration="700"
                 data-aos-once="true">
-              <span class="text-primary text-2xl mt-0.5 font-bold">→</span>
-              <span>Built Python GUI games, full-stack web apps, and Java desktop applications</span>
-            </li>
-            <li class="flex items-start gap-4"
+              <span class="block text-base sm:text-lg md:text-xl text-foreground/80">Engineered Python GUIs, web stacks, Java tools</span>
+            </div>
+            <div class="p-4 bg-background/40 rounded-xl shadow-sm transform -translate-x-4 border-r-4 border-accent"
                 data-aos="fade-up"
-                data-aos-delay="1000"
-                data-aos-duration="800"
+                data-aos-duration="700"
                 data-aos-once="true">
-              <span class="text-primary text-2xl mt-0.5 font-bold">→</span>
-              <span>Always learning the latest tools and best practices</span>
-            </li>
-            <li class="flex items-start gap-4"
+              <span class="block text-base sm:text-lg md:text-xl text-foreground/80">Evolving with cutting-edge tools and trends</span>
+            </div>
+            <div class="p-4 bg-background/40 rounded-xl shadow-sm transform translate-x-4 border-l-4 border-primary"
                 data-aos="fade-up"
-                data-aos-delay="1100"
-                data-aos-duration="800"
+                data-aos-duration="700"
                 data-aos-once="true">
-              <span class="text-primary text-2xl mt-0.5 font-bold">→</span>
-              <span>Driven by creating meaningful, user-first digital experiences</span>
-            </li>
-          </ul>
+              <span class="block text-base sm:text-lg md:text-xl text-foreground/80">Fueled by user-focused, transformative digital worlds</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -797,17 +808,7 @@
   </div>
 </section>
 
-  <!-- 8. RESUME -->
-  <section id="resume" class="py-20 lg:py-32 bg-gradient-to-r from-primary/20 to-accent/20">
-    <div class="text-center" data-aos="zoom-in">
-      <h2 class="text-4xl sm:text-6xl lg:text-7xl font-black mb-10 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">Download Resume</h2>
-      <a href="Senuka_Dinuwara_Resume.pdf" download class="inline-block px-10 py-5 bg-white text-bg rounded-full text-xl font-bold hover:scale-110 transition shadow-2xl">
-        Download Resume (PDF)
-      </a>
-    </div>
-  </section>
-
-  <!-- 9. CONTACT -->
+  <!-- 8 CONTACT -->
   <footer id="contact" class="py-20 bg-card/50 text-center">
     <h2 class="text-4xl sm:text-6xl font-black mb-10 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">Let's Connect</h2>
     <div class="flex justify-center gap-12 text-5xl mb-10">
