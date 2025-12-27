@@ -44,3 +44,12 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     }
   });
 });
+
+// Resume download popup
+const resumeLink = document.querySelector('a[href="resources/resume.pdf"]');
+if (resumeLink) {
+  resumeLink.addEventListener('click', (e) => {
+    e.preventDefault();
+    alert('Resume will be available soon');
+  });
+}
