@@ -54,9 +54,6 @@ No build process required - this is a static website that works directly in your
 - **Fast Loading**: Optimized for quick page loads
 - **Clean Code**: Well-structured HTML, CSS, and JavaScript
 
-## 📄 License
-
-This portfolio is open source and available for personal use.
 
 ---
 
