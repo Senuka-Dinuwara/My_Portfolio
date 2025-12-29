@@ -65,34 +65,65 @@
   </div>
 
   <!-- NAVBAR -->
-  <nav class="fixed top-0 w-full z-50 glass bg-bg/90 border-b border-primary/20 backdrop-blur-xl">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex justify-between items-center">
-      <h1 class="text-xl sm:text-3xl font-black bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">Senuka Dinuwara</h1>
-      <div class="hidden md:flex space-x-6 text-sm lg:text-base">
-        <a href="#home" class="hover:text-primary">Home</a>
-        <a href="#about" class="hover:text-primary">About</a>
-        <a href="#education" class="hover:text-primary">Education</a>
-        <a href="#skills" class="hover:text-primary">Skills</a>
-        <a href="#projects" class="hover:text-primary">Projects</a>
-        <a href="#certificates" class="hover:text-primary">Certificates</a>
-        <a href="#activities" class="hover:text-primary">Activities</a>
-        <a href="#contact" class="hover:text-primary">Contact</a>
+ <nav class="fixed top-0 w-full z-50 glass bg-bg/90 border-b border-primary/20 backdrop-blur-xl">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex justify-between items-center">
+    <h1 class="text-xl sm:text-3xl font-black bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+      Senuka Dinuwara
+    </h1>
+
+    <!-- Desktop Menu -->
+    <div class="hidden md:flex space-x-6 text-sm lg:text-base items-center">
+      <a href="#home" class="hover:text-primary transition">Home</a>
+      <a href="#about" class="hover:text-primary transition">About</a>
+      <a href="#education" class="hover:text-primary transition">Education</a>
+
+      <!-- Dropdown renamed to "Experience" -->
+      <div x-data="{ open: false }" class="relative" @click.outside="open = false">
+        <button 
+          @click="open = !open" 
+          class="flex items-center hover:text-primary transition focus:outline-none"
+        >
+          Experience
+          <svg class="w-4 h-4 ml-1 transition-transform" :class="{ 'rotate-180': open }" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+          </svg>
+        </button>
+
+        <div 
+          x-show="open" 
+          x-transition 
+          class="absolute left-0 mt-4 w-48 bg-bg/95 backdrop-blur-xl border border-primary/20 rounded-lg shadow-2xl py-3"
+        >
+          <a href="#skills" @click="open = false" class="block px-6 py-2 hover:text-primary hover:bg-primary/10 transition">Skills</a>
+          <a href="#projects" @click="open = false" class="block px-6 py-2 hover:text-primary hover:bg-primary/10 transition">Projects</a>
+          <a href="#certificates" @click="open = false" class="block px-6 py-2 hover:text-primary hover:bg-primary/10 transition">Certificates</a>
+          <a href="#activities" @click="open = false" class="block px-6 py-2 hover:text-primary hover:bg-primary/10 transition">Activities</a>
+        </div>
       </div>
-      <button @click="mobileMenu = !mobileMenu" class="md:hidden text-2xl"><i class="fas fa-bars"></i></button>
+
+      <a href="#contact" class="hover:text-primary transition">Contact</a>
     </div>
-    <div x-show="mobileMenu" x-transition class="md:hidden bg-bg/95 border-t border-primary/20">
-      <div class="flex flex-col py-6 px-8 space-y-5 text-lg">
-        <a href="#home" @click="mobileMenu=false" class="hover:text-primary">Home</a>
-        <a href="#about" @click="mobileMenu=false" class="hover:text-primary">About</a>
-        <a href="#education" @click="mobileMenu=false" class="hover:text-primary">Education</a>
-        <a href="#skills" @click="mobileMenu=false" class="hover:text-primary">Skills</a>
-        <a href="#projects" @click="mobileMenu=false" class="hover:text-primary">Projects</a>
-        <a href="#certificates" @click="mobileMenu=false" class="hover:text-primary">Certificates</a>
-        <a href="#activities" @click="mobileMenu=false" class="hover:text-primary">Activities</a>
-        <a href="#contact" @click="mobileMenu=false" class="hover:text-primary">Contact</a>
-      </div>
+
+    <!-- Mobile Menu Toggle -->
+    <button @click="mobileMenu = !mobileMenu" class="md:hidden text-2xl">
+      <i class="fas fa-bars"></i>
+    </button>
+  </div>
+
+  <!-- Mobile Menu -->
+  <div x-show="mobileMenu" x-transition class="md:hidden bg-bg/95 border-t border-primary/20">
+    <div class="flex flex-col py-6 px-8 space-y-5 text-lg">
+      <a href="#home" @click="mobileMenu=false" class="hover:text-primary">Home</a>
+      <a href="#about" @click="mobileMenu=false" class="hover:text-primary">About</a>
+      <a href="#education" @click="mobileMenu=false" class="hover:text-primary">Education</a>
+      <a href="#skills" @click="mobileMenu=false" class="hover:text-primary">Skills</a>
+      <a href="#projects" @click="mobileMenu=false" class="hover:text-primary">Projects</a>
+      <a href="#certificates" @click="mobileMenu=false" class="hover:text-primary">Certificates</a>
+      <a href="#activities" @click="mobileMenu=false" class="hover:text-primary">Activities</a>
+      <a href="#contact" @click="mobileMenu=false" class="hover:text-primary">Contact</a>
     </div>
-  </nav>
+  </div>
+</nav>
 
   <!-- 1. HERO -->
   <section id="home" class="min-h-screen flex items-center justify-center px-6 text-center">
