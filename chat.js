@@ -6,17 +6,20 @@
   const form = document.getElementById('chat-form');
   const input = document.getElementById('chat-input');
   const messages = document.getElementById('chat-messages');
+  const chatbot = document.getElementById('chatbot');
 
   const TYPING_SPEED = 30; // ms per character (adjustable)
   let pendingSuggestion = null;
   let greeted = false;
   let greetingTimeout = null;
+  let lastTopic = null;
 
   if (!toggle || !panel || !form || !input || !messages) return;
 
   toggle.addEventListener('click', () => {
     const nowOpen = !panel.classList.contains('open');
     panel.classList.toggle('open');
+    if (chatbot) chatbot.classList.toggle('chat-open', panel.classList.contains('open'));
     panel.setAttribute('aria-hidden', panel.classList.contains('open') ? 'false' : 'true');
     if (panel.classList.contains('open')) input.focus();
     // greet only when user opens the panel for the first time
@@ -25,33 +28,49 @@
       if (greetingTimeout) clearTimeout(greetingTimeout);
       if (!messages.querySelector('.chat-bubble.bot')){
         greetingTimeout = setTimeout(() => {
-          pushBot('Hi ask about Senuka:');
+          pushBot('Hi, I am Senuka\'s portfolio assistant. Ask me about his projects, skills, education, contact links, or a specific project like Security Vault.');
           greetingTimeout = null;
         }, 420);
       }
     }
   });
-  closeBtn.addEventListener('click', () => { panel.classList.remove('open'); panel.setAttribute('aria-hidden','true'); });
+  closeBtn.addEventListener('click', () => {
+    panel.classList.remove('open');
+    if (chatbot) chatbot.classList.remove('chat-open');
+    panel.setAttribute('aria-hidden','true');
+  });
 
   function extractProjects(){
     const list = [];
     document.querySelectorAll('.project-card').forEach(card => {
       const titleEl = card.querySelector('h3');
       const title = titleEl ? titleEl.textContent.trim() : 'Untitled';
-      const spans = Array.from(card.querySelectorAll('span')).map(s => s.textContent.trim()).filter(Boolean);
-      const statusCandidates = ['completed','ongoing','on hold','onhold'];
+      const descriptionEl = card.querySelector('p');
+      const description = descriptionEl ? descriptionEl.textContent.trim() : '';
+      const languageSpans = Array.from(card.querySelectorAll('.p-6 .flex span')).map(s => s.textContent.trim()).filter(Boolean);
+      const badges = Array.from(card.querySelectorAll('.project-badge')).map(s => ({
+        text: s.textContent.trim(),
+        type: (s.dataset.type || '').trim()
+      })).filter(b => b.text);
       let status = 'Unknown';
-      spans.forEach(s => {
-        const sl = s.toLowerCase();
+      let category = 'Unknown';
+      badges.forEach(b => {
+        const sl = `${b.text} ${b.type}`.toLowerCase();
         if (sl.includes('completed')) status = 'Completed';
         if (sl.includes('ongoing')) status = 'Ongoing';
         if (sl.includes('on hold') || sl.includes('onhold')) status = 'On Hold';
+        if (sl.includes('personal')) category = 'Personal';
+        if (sl.includes('individual')) category = 'Individual';
+        if (sl.includes('group')) category = 'Group';
       });
-      const languages = spans.filter(s => !statusCandidates.includes(s.toLowerCase()));
-      // find first external link inside card (github / live demo)
-      const a = card.querySelector('a[href^="http"]');
-      const url = a ? a.getAttribute('href') : null;
-      list.push({ title, status, languages, url });
+      const links = Array.from(card.querySelectorAll('a[href^="http"]')).map(a => {
+        const href = a.getAttribute('href');
+        const icon = a.querySelector('i');
+        const iconClass = icon ? icon.className : '';
+        const label = iconClass.includes('github') ? 'GitHub' : 'Live link';
+        return { label, href };
+      });
+      list.push({ title, description, status, category, languages: languageSpans, links });
     });
     return list;
   }
@@ -99,6 +118,165 @@
     return Array.from(intents);
   }
 
+  function normalizeText(value){
+    return String(value || '')
+      .toLowerCase()
+      .replace(/[^a-z0-9+#/. ]+/g, ' ')
+      .replace(/\s+/g, ' ')
+      .trim();
+  }
+
+  function splitLanguageNames(language){
+    const raw = String(language || '').trim();
+    if (!raw) return [];
+    return raw.split(/[\/,]+/).map(part => part.trim()).filter(Boolean).concat(raw);
+  }
+
+  function projectSearchText(project){
+    return normalizeText([
+      project.title,
+      project.description,
+      project.status,
+      project.category,
+      project.languages.join(' '),
+      project.links.map(link => link.href).join(' ')
+    ].join(' '));
+  }
+
+  function knownLanguages(projects){
+    const names = new Set();
+    projects.forEach(project => {
+      project.languages.forEach(language => {
+        splitLanguageNames(language).forEach(name => names.add(name));
+      });
+    });
+    ['JavaScript', 'JS', 'HTML', 'CSS', 'Web', 'Desktop GUI'].forEach(name => names.add(name));
+    return Array.from(names).sort((a, b) => b.length - a.length);
+  }
+
+  function findMentionedLanguage(text, projects){
+    const low = normalizeText(text);
+    const aliases = {
+      javascript: 'JS',
+      js: 'JS',
+      html: 'HTML',
+      css: 'CSS',
+      web: 'HTML',
+      gui: 'Tkinter',
+      desktop: 'Swing'
+    };
+    const aliasKey = Object.keys(aliases).find(key => low.includes(key));
+    if (aliasKey) return aliases[aliasKey];
+    return knownLanguages(projects).find(language => low.includes(normalizeText(language)));
+  }
+
+  function findProjectByQuestion(text, projects){
+    const low = normalizeText(text);
+    let best = null;
+    let score = 0;
+
+    projects.forEach(project => {
+      const title = normalizeText(project.title);
+      let current = 0;
+      if (low.includes(title)) current += 20;
+
+      const words = title.split(' ').filter(word => word.length > 2);
+      words.forEach(word => {
+        if (low.includes(word)) current += 4;
+      });
+
+      if (project.description && low.includes(normalizeText(project.description))) current += 5;
+      if (current > score) {
+        score = current;
+        best = project;
+      }
+    });
+
+    return score >= 4 ? best : null;
+  }
+
+  function formatProject(project, options = {}){
+    const lines = [];
+    lines.push(`${project.title} is ${project.description ? project.description.charAt(0).toLowerCase() + project.description.slice(1) : 'one of Senuka\'s listed portfolio projects'}.`);
+    if (!options.onlyLanguages) {
+      lines.push(`It is marked as ${project.status.toLowerCase()} and listed as a ${project.category.toLowerCase()} project.`);
+    }
+    if (project.languages.length) lines.push(`The main technologies shown are ${project.languages.join(', ')}.`);
+    if (!options.onlyLanguages && project.links.length) {
+      project.links.forEach(link => lines.push(`${link.label}: ${link.href}`));
+    }
+    return lines.join('\n');
+  }
+
+  function formatProjectList(projects, heading){
+    if (!projects.length) return `${heading}\nI could not find a matching project in the portfolio yet. Try a different technology, status, or project name.`;
+    return `${heading}\n\n- ${projects.map(project => formatProject(project)).join('\n\n- ')}`;
+  }
+
+  function projectAnswer(question, projects){
+    const low = normalizeText(question);
+    const isProjectFollowUp = /\bit\b|\bthat\b|\bthis\b|\bthem\b|\bthose\b|same project|its |their |language|tech|stack|status|link|github|demo|live|type|category/.test(low);
+    const mentionedProject = findProjectByQuestion(question, projects) || (isProjectFollowUp && lastTopic && lastTopic.type === 'project' ? lastTopic.value : null);
+    const mentionedLanguage = findMentionedLanguage(question, projects);
+
+    const asksLanguage = /language|tech|technology|stack|built with|use|used|framework|tool/.test(low);
+    const asksStatus = /status|complete|completed|ongoing|hold|progress|finished/.test(low);
+    const asksLink = /link|github|repo|repository|demo|live|website|url/.test(low);
+    const asksType = /personal|individual|group|team|type|category/.test(low);
+    const asksDescription = /about|explain|describe|detail|what is|tell me/.test(low);
+    const asksCount = /how many|count|number/.test(low);
+
+    if (mentionedProject) {
+      lastTopic = { type: 'project', value: mentionedProject };
+      if (asksLanguage && !asksStatus && !asksLink && !asksType) {
+        return `${mentionedProject.title} is built with ${mentionedProject.languages.join(', ') || 'technology that is not listed yet'} based on the portfolio card.`;
+      }
+      if (asksStatus && !asksLanguage && !asksLink && !asksType) {
+        return `${mentionedProject.title} is currently marked as ${mentionedProject.status.toLowerCase()} in the portfolio.`;
+      }
+      if (asksType && !asksLanguage && !asksStatus && !asksLink) {
+        return `${mentionedProject.title} is listed as a ${mentionedProject.category.toLowerCase()} project.`;
+      }
+      if (asksLink && !asksLanguage && !asksStatus && !asksType) {
+        return mentionedProject.links.length
+          ? `Yes, here are the links listed for ${mentionedProject.title}:\n${mentionedProject.links.map(link => `${link.label}: ${link.href}`).join('\n')}`
+          : `${mentionedProject.title} does not have a public link listed in the portfolio yet.`;
+      }
+      return `Here is the useful summary for ${mentionedProject.title}:\n\n${formatProject(mentionedProject)}`;
+    }
+
+    let matches = projects.slice();
+    if (mentionedLanguage) {
+      const langNorm = normalizeText(mentionedLanguage);
+      matches = matches.filter(project => project.languages.some(language => splitLanguageNames(language).some(name => normalizeText(name) === langNorm || normalizeText(name).includes(langNorm))));
+    }
+    if (/completed|finished/.test(low)) matches = matches.filter(project => project.status.toLowerCase() === 'completed');
+    if (/ongoing|progress/.test(low)) matches = matches.filter(project => project.status.toLowerCase() === 'ongoing');
+    if (/on hold|onhold|hold|paused/.test(low)) matches = matches.filter(project => project.status.toLowerCase() === 'on hold');
+    if (/personal/.test(low)) matches = matches.filter(project => project.category.toLowerCase() === 'personal');
+    if (/individual/.test(low)) matches = matches.filter(project => project.category.toLowerCase() === 'individual');
+    if (/group|team/.test(low)) matches = matches.filter(project => project.category.toLowerCase() === 'group');
+
+    if (asksCount) return `I found ${matches.length} matching project${matches.length === 1 ? '' : 's'} in Senuka's portfolio.`;
+    if (mentionedLanguage || asksStatus || asksType || /project|portfolio|built|using|made/.test(low)) {
+      const heading = mentionedLanguage ? `Projects using ${mentionedLanguage}:` : 'Matching projects:';
+      return formatProjectList(matches, heading);
+    }
+
+    return null;
+  }
+
+  function profileAnswer(question){
+    const low = normalizeText(question);
+    if (/who is|about senuka|about me|summary|introduce|bio/.test(low)) {
+      return 'Senuka Dinuwara is a second-year BSc Computer Science student at the University of Westminster through IIT Campus. He works with Python, Java, JavaScript, HTML/CSS, GUI apps, websites, and problem-solving projects.';
+    }
+    if (/skill|technology|tech stack|programming|language/.test(low)) {
+      return 'Senuka highlights Python, Java, JavaScript, HTML/CSS, Tkinter, Swing, Flutter, and Dart across the portfolio projects.';
+    }
+    return null;
+  }
+
   // simple Levenshtein distance for small fuzzy matching
   function levenshtein(a, b){
     a = String(a || '').toLowerCase(); b = String(b || '').toLowerCase();
@@ -120,6 +298,7 @@
     const low = t.toLowerCase();
     const projects = extractProjects();
     const accounts = extractAccounts();
+    const normalized = normalizeText(t);
 
     // If user is responding to a previous suggestion
     if (pendingSuggestion){
@@ -150,14 +329,19 @@
       if (key){
         const sel = map[key];
         const el = document.querySelector(sel);
-        if (el){ el.scrollIntoView({ behavior: 'smooth', block: 'start' }); return `Navigating to ${key.charAt(0).toUpperCase()+key.slice(1)}.`; }
-        return `Can't find the ${key} section on this page.`;
+        if (el){ el.scrollIntoView({ behavior: 'smooth', block: 'start' }); return `Sure, I have moved the page to the ${key.charAt(0).toUpperCase()+key.slice(1)} section.`; }
+        return `I tried to open the ${key} section, but I cannot find it on this page.`;
       }
-      return `I couldn't identify that section. Try: About, Projects, Contact, Education.`;
+      return `I could not identify that section. You can ask me to open About, Projects, Contact, Education, Skills, Certificates, or Activities.`;
     }
 
+    const projectReply = projectAnswer(t, projects);
+    if (projectReply) return projectReply;
+
+    const profileReply = profileAnswer(t);
+    if (profileReply) return profileReply;
+
     const intents = detectIntents(t);
-    if (intents.length > 1) return 'Please ask about one topic at a time: name, age, education, projects, or accounts.';
     const intent = intents[0] || null;
 
     // fuzzy suggestion when no intent matched
@@ -168,14 +352,18 @@
       // accept small typos: 1 edit, or 2 edits for longer words
       if (best && (bestD <= 1 || (bestD <= 2 && best.length > 4))){
         pendingSuggestion = best;
-        return `Did you mean "${best}"? Reply 'yes' to confirm.`;
+        return `I think you might mean "${best}". Reply yes and I will answer that.`;
       }
     }
 
-    if (intent === 'name') return profile.name;
+    if (!intent) {
+      return 'I can answer from Senuka\'s portfolio, but I need a little more detail. Try asking about a project, skill, education, contact link, or something like "Which Java projects are completed?"';
+    }
+
+    if (intent === 'name') return `His full name is ${profile.name}.`;
     if (intent === 'age'){
       const age = profile.birthDate ? calculateAge(profile.birthDate) : null;
-      return (age === null || age === undefined) ? 'Not specified' : `${age} years old`;
+      return (age === null || age === undefined) ? 'I do not see an age listed in the current portfolio data.' : `${profile.name} is ${age} years old.`;
     }
     if (intent === 'education'){
       // split entries on em-dash/en-dash/hyphen and render as two lines: degree then institution+dates
@@ -191,18 +379,20 @@
     }
     if (intent === 'accounts'){
       // if asks for specific service, return that only
-      if (low.includes('github')) return accounts.github || 'GitHub not found';
-      if (low.includes('linkedin')) return accounts.linkedin || 'LinkedIn not found';
-      if (low.includes('email')) return accounts.email || 'Email not found';
+      if (low.includes('github')) return accounts.github ? `You can find Senuka on GitHub here: ${accounts.github}` : 'I do not see a GitHub link listed right now.';
+      if (low.includes('linkedin')) return accounts.linkedin ? `Here is Senuka's LinkedIn profile: ${accounts.linkedin}` : 'I do not see a LinkedIn link listed right now.';
+      if (low.includes('email')) return accounts.email ? `You can contact Senuka by email at ${accounts.email}.` : 'I do not see an email address listed right now.';
       // otherwise return all available links
       const parts = [];
-      if (accounts.github) parts.push(accounts.github);
-      if (accounts.linkedin) parts.push(accounts.linkedin);
-      if (accounts.email) parts.push(accounts.email);
-      return parts.length ? parts.join('\n') : 'No public account links found on this page.';
+      if (accounts.github) parts.push(`GitHub: ${accounts.github}`);
+      if (accounts.linkedin) parts.push(`LinkedIn: ${accounts.linkedin}`);
+      if (accounts.email) parts.push(`Email: ${accounts.email}`);
+      return parts.length ? `Here are the contact links I found:\n\n${parts.join('\n\n')}` : 'I do not see public contact links on this page right now.';
     }
 
     if (intent === 'projects'){
+      return formatProjectList(projects, 'Here are the projects currently listed in Senuka\'s portfolio:');
+
       // helper to format a single project line (single-line, includes url if present)
       function fmt(p){
         const langs = (p.languages && p.languages.length) ? p.languages.join(', ') : '';
@@ -336,12 +526,17 @@
         const tok = tokens[ti++];
         if (tok.type === 'text'){
           let i = 0; const text = tok.content;
-          const textNode = document.createTextNode(''); parent.appendChild(textNode);
+          let textNode = document.createTextNode(''); parent.appendChild(textNode);
           const iv = setInterval(()=>{
             if (i >= text.length){ clearInterval(iv); nextToken(); return; }
             const ch = text.charAt(i++);
-            if (ch === '\n') parent.appendChild(document.createElement('br'));
-            else textNode.textContent += ch;
+            if (ch === '\n') {
+              parent.appendChild(document.createElement('br'));
+              textNode = document.createTextNode('');
+              parent.appendChild(textNode);
+            } else {
+              textNode.textContent += ch;
+            }
             messages.scrollTop = messages.scrollHeight;
           }, speed);
         } else if (tok.type === 'link' || tok.type === 'email'){
@@ -449,7 +644,15 @@
       });
   }
 
-  form.addEventListener('submit', (e)=>{ e.preventDefault(); const q = input.value && input.value.trim(); if(!q) return; pushUser(q); input.value=''; setTimeout(()=>{ const r = getResponse(q); pushBot(r); }, 250); });
+  form.addEventListener('submit', (e)=>{
+    e.preventDefault();
+    const q = input.value && input.value.trim();
+    if(!q) return;
+    pushUser(q);
+    input.value='';
+    const delay = Math.min(900, 260 + q.length * 12);
+    setTimeout(()=>{ const r = getResponse(q); pushBot(r); }, delay);
+  });
 
   input.addEventListener('keydown', (e)=>{ if (e.key === 'Enter' && !e.shiftKey){ e.preventDefault(); form.dispatchEvent(new Event('submit', {cancelable:true, bubbles:true})); }});
 
