@@ -24,6 +24,11 @@
     chatbot.style.setProperty('--chat-visible-height', `${Math.round(viewport.height)}px`);
   }
 
+  function setPageScrollLock(locked){
+    document.documentElement.classList.toggle('chat-scroll-lock', locked);
+    document.body.classList.toggle('chat-scroll-lock', locked);
+  }
+
   syncKeyboardViewport();
   if (window.visualViewport) {
     window.visualViewport.addEventListener('resize', syncKeyboardViewport);
@@ -35,6 +40,7 @@
     const nowOpen = !panel.classList.contains('open');
     panel.classList.toggle('open');
     if (chatbot) chatbot.classList.toggle('chat-open', panel.classList.contains('open'));
+    setPageScrollLock(panel.classList.contains('open'));
     panel.setAttribute('aria-hidden', panel.classList.contains('open') ? 'false' : 'true');
     if (panel.classList.contains('open')) {
       syncKeyboardViewport();
@@ -55,6 +61,7 @@
   closeBtn.addEventListener('click', () => {
     panel.classList.remove('open');
     if (chatbot) chatbot.classList.remove('chat-open');
+    setPageScrollLock(false);
     panel.setAttribute('aria-hidden','true');
   });
 

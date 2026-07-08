@@ -443,6 +443,18 @@ body.loading #chatbot.ready {
 }
 
 @media (max-width: 640px) {
+  html.chat-scroll-lock,
+  body.chat-scroll-lock {
+    overflow: hidden !important;
+    overscroll-behavior: none;
+    touch-action: none;
+  }
+
+  body.chat-scroll-lock #chatbot,
+  body.chat-scroll-lock #chatbot * {
+    touch-action: auto;
+  }
+
   #chatbot {
     right: 12px;
     bottom: max(12px, env(safe-area-inset-bottom));
