@@ -269,6 +269,10 @@ html::-webkit-scrollbar-thumb:hover {
 #chatbot * {
   box-sizing: border-box;
 }
+#chatbot {
+  --chat-keyboard-offset: 0px;
+  --chat-visible-height: 100vh;
+}
 #chatbot.ready { opacity: 1; transform: none; pointer-events: auto; }
 /* Keep chatbot hidden while page is in loading state */
 body.loading #chatbot,
@@ -431,10 +435,10 @@ body.loading #chatbot.ready {
   .chat-panel {
     position: fixed;
     right: max(16px, env(safe-area-inset-right));
-    bottom: max(16px, env(safe-area-inset-bottom));
+    bottom: calc(max(16px, env(safe-area-inset-bottom)) + var(--chat-keyboard-offset, 0px));
     width: min(380px, calc(100vw - 32px));
-    height: min(520px, calc(100dvh - 48px));
-    max-height: calc(100vh - 48px);
+    height: min(520px, calc(var(--chat-visible-height, 100vh) - 48px));
+    max-height: calc(var(--chat-visible-height, 100vh) - 48px);
   }
 }
 
@@ -452,10 +456,10 @@ body.loading #chatbot.ready {
   .chat-panel {
     left: 12px;
     right: 12px;
-    bottom: max(12px, env(safe-area-inset-bottom));
+    bottom: calc(max(12px, env(safe-area-inset-bottom)) + var(--chat-keyboard-offset, 0px));
     width: auto;
-    height: min(68dvh, calc(100dvh - 36px));
-    max-height: calc(100vh - 36px);
+    height: min(68dvh, calc(var(--chat-visible-height, 100vh) - 36px));
+    max-height: calc(var(--chat-visible-height, 100vh) - 36px);
     border-radius: 14px;
   }
 
@@ -493,9 +497,9 @@ body.loading #chatbot.ready {
   .chat-panel {
     left: 8px;
     right: 8px;
-    bottom: max(8px, env(safe-area-inset-bottom));
-    height: min(72dvh, calc(100dvh - 24px));
-    max-height: calc(100vh - 24px);
+    bottom: calc(max(8px, env(safe-area-inset-bottom)) + var(--chat-keyboard-offset, 0px));
+    height: min(72dvh, calc(var(--chat-visible-height, 100vh) - 24px));
+    max-height: calc(var(--chat-visible-height, 100vh) - 24px);
   }
 
   .chat-form {

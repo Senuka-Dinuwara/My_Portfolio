@@ -16,12 +16,30 @@
 
   if (!toggle || !panel || !form || !input || !messages) return;
 
+  function syncKeyboardViewport(){
+    if (!window.visualViewport || !chatbot) return;
+    const viewport = window.visualViewport;
+    const keyboardOffset = Math.max(0, window.innerHeight - viewport.height - viewport.offsetTop);
+    chatbot.style.setProperty('--chat-keyboard-offset', `${Math.round(keyboardOffset)}px`);
+    chatbot.style.setProperty('--chat-visible-height', `${Math.round(viewport.height)}px`);
+  }
+
+  syncKeyboardViewport();
+  if (window.visualViewport) {
+    window.visualViewport.addEventListener('resize', syncKeyboardViewport);
+    window.visualViewport.addEventListener('scroll', syncKeyboardViewport);
+  }
+  window.addEventListener('orientationchange', () => setTimeout(syncKeyboardViewport, 250));
+
   toggle.addEventListener('click', () => {
     const nowOpen = !panel.classList.contains('open');
     panel.classList.toggle('open');
     if (chatbot) chatbot.classList.toggle('chat-open', panel.classList.contains('open'));
     panel.setAttribute('aria-hidden', panel.classList.contains('open') ? 'false' : 'true');
-    if (panel.classList.contains('open')) input.focus();
+    if (panel.classList.contains('open')) {
+      syncKeyboardViewport();
+      input.focus();
+    }
     // greet only when user opens the panel for the first time
     if (nowOpen && !greeted){
       greeted = true;
@@ -39,6 +57,15 @@
     if (chatbot) chatbot.classList.remove('chat-open');
     panel.setAttribute('aria-hidden','true');
   });
+
+  input.addEventListener('focus', () => {
+    syncKeyboardViewport();
+    setTimeout(() => {
+      syncKeyboardViewport();
+      messages.scrollTop = messages.scrollHeight;
+    }, 250);
+  });
+  input.addEventListener('blur', () => setTimeout(syncKeyboardViewport, 120));
 
   function extractProjects(){
     const list = [];
