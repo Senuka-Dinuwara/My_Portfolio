@@ -206,20 +206,20 @@ html::-webkit-scrollbar-thumb:hover {
       padding: 0.45rem 0.70rem;
       border-radius: 999px;
       font-size: 0.65rem;
-      font-weight: 700;
+      font-weight: bolder;
       text-transform: capitalize;
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border: 1px solid transparent;
-      transition: transform .22s ease, background .22s ease, border-color .22s ease, color .22s ease;
+      letter-spacing: 0.01em;
+      border: 1px solid rgba(255,255,255,0.34);
+      box-shadow: 0 8px 22px rgba(2,6,23,0.34);
+      transition: transform .22s ease, background .22s ease, border-color .22s ease, color .22s ease, box-shadow .22s ease;
     }
-    .project-badge:hover { transform: translateY(-1px); }
-    .project-badge[data-type="personal"] { background: rgba(56,189,248,0.16); color: #7dd3fc; border-color: rgba(56,189,248,0.35); }
-    .project-badge[data-type="individual"] { background: rgba(249,115,22,0.16); color: #fdba74; border-color: rgba(249,115,22,0.35); }
-    .project-badge[data-type="group"] { background: rgba(168,85,247,0.16); color: #c084fc; border-color: rgba(168,85,247,0.35); }
-    .project-badge[data-type="ongoing"] { background: rgba(234,179,8,0.16); color: #fde68a; border-color: rgba(234,179,8,0.35); }
-    .project-badge[data-type="completed"] { background: rgba(16,185,129,0.16); color: #6ee7b7; border-color: rgba(16,185,129,0.35); }
-    .project-badge[data-type="onhold"] { background: rgba(244,63,94,0.16); color: #fda4af; border-color: rgba(244,63,94,0.35); }
+    .project-badge:hover { transform: translateY(-1px); box-shadow: 0 10px 26px rgba(2,6,23,0.42); }
+    .project-badge[data-type="personal"] { background: #0284c790; color: #ffffff; border-color: #7dd3fc; }
+    .project-badge[data-type="individual"] { background: #ea580c90; color: #ffffff; border-color: #fdba74; }
+    .project-badge[data-type="group"] { background: #7c3aed90; color: #ffffff; border-color: #d8b4fe; }
+    .project-badge[data-type="ongoing"] { background: #facc1590; color: #ffffff; border-color: #fef08a; }
+    .project-badge[data-type="completed"] { background: #05966890; color: #ffffff; border-color: #86efac; }
+    .project-badge[data-type="onhold"] { background: #e11d4790; color: #ffffff; border-color: #fda4af; }
 
     @keyframes blob {
       0% { transform: translate(0px, 0px) scale(1); }
