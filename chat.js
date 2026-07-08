@@ -96,6 +96,58 @@
     ]
   };
 
+  const educationRecords = [
+    {
+      id: 'uow',
+      aliases: ['uow', 'westminster', 'university of westminster', 'university'],
+      title: 'BSc (Hons) Computer Science',
+      institution: 'University of Westminster',
+      campus: 'IIT Campus',
+      period: 'Sep 2024 - Present',
+      status: 'Currently studying',
+      structure: '2 semesters per year, usually 4-5 subjects per semester.',
+      subjectsPlanned: 'Subjects and marks can be added later semester by semester.',
+      subjects: [],
+      achievements: []
+    },
+    {
+      id: 'iit',
+      aliases: ['iit', 'informatics institute of technology', 'foundation', 'foundation program'],
+      title: 'Foundation Program',
+      institution: 'Informatics Institute of Technology',
+      campus: 'IIT Campus',
+      period: 'Sep 2023 - May 2024',
+      status: 'Completed with Distinction Pass',
+      structure: '8+ subjects across 2 semesters.',
+      subjectsPlanned: 'Foundation subjects, marks, and achievements can be added later.',
+      subjects: [],
+      achievements: []
+    },
+    {
+      id: 'sumedha',
+      aliases: ['sumedha', 'sumedha college', 'school', 'o/l', 'ol', 'ordinary level', 'gce o/l'],
+      title: 'High School - GCE O/L',
+      institution: 'Sumedha College, Gampaha',
+      campus: '',
+      period: '2011 - 2023',
+      status: 'Completed',
+      structure: 'GCE O/L completed with 9 subjects.',
+      subjectsPlanned: 'The 9 O/L subjects, marks, and school achievements can be added later.',
+      subjects: [
+        { name: 'Buddhism', mark: 'S', status: 'Completed' },
+        { name: 'Sinhala', mark: 'C', status: 'Completed' },
+        { name: 'English', mark: 'A', status: 'Completed' },
+        { name: 'Mathematics', mark: 'B', status: 'Completed' },
+        { name: 'History', mark: 'C', status: 'Completed' },
+        { name: 'Science', mark: 'C', status: 'Completed' },
+        { name: 'English Literature', mark: 'W', status: 'Completed' },
+        { name: 'Business & Accounting', mark: 'C', status: 'Completed' },
+        { name: 'ICT', mark: 'A', status: 'Completed' }
+      ],
+      achievements: []
+    }
+  ];
+
   function calculateAge(birthDateStr){
     if (!birthDateStr) return null;
     const bd = new Date(birthDateStr);
@@ -277,6 +329,53 @@
     return null;
   }
 
+  function certificatesAnswer(question, accounts){
+    const low = normalizeText(question);
+    if (!/certificate|certificates|certification|certifications|credential|credentials/.test(low)) return null;
+    const linkedIn = accounts.linkedin || 'https://www.linkedin.com/in/senuka-dinuwara/';
+    return `For Senuka's certificates and credentials, the best place to check is his LinkedIn profile because it can stay more up to date than this portfolio section.\n\nLinkedIn: ${linkedIn}`;
+  }
+
+  function findEducationRecord(question){
+    const low = normalizeText(question);
+    return educationRecords.find(record => record.aliases.some(alias => low.includes(normalizeText(alias)))) || null;
+  }
+
+  function formatSubjects(record){
+    if (!record.subjects.length) return '';
+    return record.subjects.map(subject => {
+      const parts = [subject.name];
+      if (subject.mark) parts.push(`Mark: ${subject.mark}`);
+      return parts.join(' - ');
+    }).join('\n');
+  }
+
+  function educationSpecificAnswer(question){
+    const low = normalizeText(question);
+    const asksEducation = /education|school|college|university|iit|uow|westminster|sumedha|subject|subjects|marks|semester|o\/l|ol|foundation/.test(low);
+    if (!asksEducation) return null;
+
+    const record = findEducationRecord(question);
+    if (!record) return null;
+
+    const lines = [
+      `${record.title}`,
+      `${record.institution}${record.campus ? ` (${record.campus})` : ''}`,
+      `Period: ${record.period}`,
+      `Status: ${record.status}`,
+      `Structure: ${record.structure}`
+    ];
+
+    const subjects = formatSubjects(record);
+    if (subjects) lines.push(`Subjects/marks:\n${subjects}`);
+
+    if (record.achievements.length) {
+      lines.push(`Achievements: ${record.achievements.join(', ')}`);
+    }
+
+    return lines.join('\n');
+  }
+
   // simple Levenshtein distance for small fuzzy matching
   function levenshtein(a, b){
     a = String(a || '').toLowerCase(); b = String(b || '').toLowerCase();
@@ -312,6 +411,9 @@
       }
     }
 
+    const certificateReply = certificatesAnswer(t, accounts);
+    if (certificateReply) return certificateReply;
+
     // Navigation commands: "go to projects", "open about", "scroll to contact" etc.
     const navMatch = t.match(/(?:go to|open|show|scroll to|take me to|navigate to)\s+([a-zA-Z ]+)/i);
     if (navMatch){
@@ -334,6 +436,9 @@
       }
       return `I could not identify that section. You can ask me to open About, Projects, Contact, Education, Skills, Certificates, or Activities.`;
     }
+
+    const educationReply = educationSpecificAnswer(t);
+    if (educationReply) return educationReply;
 
     const projectReply = projectAnswer(t, projects);
     if (projectReply) return projectReply;
@@ -364,6 +469,14 @@
     if (intent === 'age'){
       const age = profile.birthDate ? calculateAge(profile.birthDate) : null;
       return (age === null || age === undefined) ? 'I do not see an age listed in the current portfolio data.' : `${profile.name} is ${age} years old.`;
+    }
+    if (intent === 'education'){
+      const cleaned = profile.education.map(entry => {
+        const parts = entry.split(/\s*[—–-]\s*/).map(s => s.trim()).filter(Boolean);
+        if (parts.length === 1) return parts[0];
+        return `${parts[0]}\n${parts.slice(1).join(' - ')}`;
+      });
+      return `EDUCATION_TIMELINE:\n${cleaned.join('\n---\n')}`;
     }
     if (intent === 'education'){
       // split entries on em-dash/en-dash/hyphen and render as two lines: degree then institution+dates
@@ -491,6 +604,23 @@
     const urlRe = /(https?:\/\/[^\s]+)/i;
     const emailRe = /([A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,})/i;
 
+    if (rawText.startsWith('EDUCATION_TIMELINE:')){
+      const items = rawText
+        .replace('EDUCATION_TIMELINE:', '')
+        .split(/\n---\n/)
+        .map(item => item.trim())
+        .filter(Boolean)
+        .map(item => {
+          const parts = item.split(/\r?\n/).map(part => part.trim()).filter(Boolean);
+          return {
+            title: parts[0] || 'Education',
+            detail: parts.slice(1).join(' '),
+          };
+        });
+      if (items.length) tokens.push({ type: 'educationTimeline', items });
+      return tokens;
+    }
+
     if (headLines.length && !items.length){
       const head = headLines.join('\n');
       if (head.trim()){
@@ -593,6 +723,48 @@
             typePart();
           }
           typeItem();
+        } else if (tok.type === 'educationTimeline'){
+          const timeline = document.createElement('div');
+          timeline.className = 'education-timeline';
+          parent.appendChild(timeline);
+
+          const title = document.createElement('div');
+          title.className = 'education-timeline-title';
+          title.textContent = 'Education timeline';
+          timeline.appendChild(title);
+
+          tok.items.forEach((item, index) => {
+            const row = document.createElement('div');
+            row.className = 'education-timeline-item';
+            row.style.animationDelay = `${index * 90}ms`;
+
+            const marker = document.createElement('span');
+            marker.className = 'education-timeline-marker';
+            marker.setAttribute('aria-hidden', 'true');
+
+            const body = document.createElement('div');
+            body.className = 'education-timeline-body';
+
+            const heading = document.createElement('div');
+            heading.className = 'education-timeline-heading';
+            heading.textContent = item.title;
+
+            const detail = document.createElement('div');
+            detail.className = 'education-timeline-detail';
+            detail.textContent = item.detail;
+
+            body.appendChild(heading);
+            if (item.detail) body.appendChild(detail);
+            row.appendChild(marker);
+            row.appendChild(body);
+            timeline.appendChild(row);
+          });
+
+          requestAnimationFrame(() => {
+            timeline.querySelectorAll('.education-timeline-item').forEach(item => item.classList.add('show'));
+          });
+          messages.scrollTop = messages.scrollHeight;
+          nextToken();
         }
       }
       nextToken();
