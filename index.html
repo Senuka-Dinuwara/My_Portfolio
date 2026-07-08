@@ -45,7 +45,7 @@
   
 </head>
 
-<body class="bg-bg text-white min-h-screen overflow-x-hidden" x-data="{ mobileMenu: false }">
+<body class="bg-bg text-white min-h-screen overflow-x-hidden loading" x-data="{ mobileMenu: false }">
 
   <div id="preloader" class="loader-wrapper">
     <div class="loader"></div>
@@ -128,7 +128,7 @@
   <!-- 1. HERO -->
   <section id="home" class="min-h-screen flex items-center justify-center px-6 text-center">
   <div data-aos="fade-up">
-    <h1 class="text-5xl sm:text-7xl lg:text-9xl font-black mb-6 leading-tight glow">
+    <h1 class="text-5xl sm:text-7xl lg:text-9xl font-black mb-6 leading-tight glow hero-title hero-name-hover">
       <span class="block bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">SENUKA</span>
       <span class="block mt-2">DINUWARA</span>
     </h1>
@@ -210,13 +210,13 @@
               data-aos-duration="700"
               data-aos-once="true">
             <a href="resources/resume.pdf" 
-               download
-               class="relative inline-flex items-center px-6 py-3 md:px-8 md:py-4 
-                 btn-glass font-semibold text-base md:text-lg 
-                 rounded-full shadow-md overflow-hidden 
-                 transition-all duration-300 
-                 hover:shadow-xl hover:scale-105 
-                 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2">
+              download
+              class="relative inline-flex items-center px-6 py-3 md:px-8 md:py-4 
+                btn-glass btn-cta font-semibold text-base md:text-lg 
+                rounded-full shadow-md overflow-hidden 
+                transition-all duration-300 
+                hover:shadow-xl hover:scale-105 
+                focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2">
               <span class="relative z-10">Download Resume</span>
               <span class="relative z-10 ml-2 text-xl">↓</span>
               <!-- Particle background -->
@@ -277,6 +277,28 @@
     </div>
   </section>
 
+  <!-- Chatbot: bottom-right keyword-based assistant -->
+  <div id="chatbot" class="chatbot">
+    <button id="chat-toggle" class="chat-toggle" aria-label="Open chat">
+      <span class="chat-ring"></span>
+      <i class="fas fa-comment"></i>
+    </button>
+
+    <div id="chat-panel" class="chat-panel" aria-hidden="true">
+      <div class="chat-header">
+        Ask about Senuka
+        <button id="chat-close" class="chat-close" aria-label="Close chat">×</button>
+      </div>
+
+      <div id="chat-messages" class="chat-messages" role="log" aria-live="polite"></div>
+
+      <form id="chat-form" class="chat-form">
+        <input id="chat-input" class="chat-input" placeholder="Ask about Senuka Dinuwara ..." autocomplete="off">
+        <button type="submit" class="chat-send">Send</button>
+      </form>
+    </div>
+  </div>
+
   <!-- 3. EDUCATION -->
   <section id="education" class="py-20 lg:py-36 bg-bg">
     <div class="max-w-5xl mx-auto px-6">
@@ -289,7 +311,7 @@
       <div class="space-y-16">
 
         <!-- 1. University of Westminster -->
-        <div class="bg-card/60 backdrop-blur-sm border border-primary/10 rounded-3xl p-8 lg:p-12 shadow-xl hover:shadow-2xl hover:border-primary/20 transition-all duration-500"
+        <div class="bg-card/60 backdrop-blur-sm border border-primary/10 rounded-3xl p-8 lg:p-12 shadow-xl hover:shadow-2xl hover:border-primary/20 transition-all duration-500 card-lift"
             data-aos="fade-up">
           <div class="flex flex-col sm:flex-row items-start sm:items-center gap-8">
             <!-- Logo inside the card -->
@@ -312,7 +334,7 @@
         </div>
 
         <!-- 2. IIT Foundation -->
-        <div class="bg-card/60 backdrop-blur-sm border border-primary/10 rounded-3xl p-8 lg:p-12 shadow-xl hover:shadow-2xl hover:border-primary/20 transition-all duration-500"
+        <div class="bg-card/60 backdrop-blur-sm border border-primary/10 rounded-3xl p-8 lg:p-12 shadow-xl hover:shadow-2xl hover:border-primary/20 transition-all duration-500 card-lift"
             data-aos="fade-up" data-aos-delay="100">
           <div class="flex flex-col sm:flex-row items-start sm:items-center gap-8">
             <div class="shrink-0 w-24 h-24 lg:w-28 lg:h-28 rounded-2xl bg-white/10 backdrop-blur border border-white/20 flex items-center justify-center shadow-lg p-4">
@@ -336,7 +358,7 @@
         </div>
 
         <!-- 3. Sumedha College -->
-        <div class="bg-card/60 backdrop-blur-sm border border-primary/10 rounded-3xl p-8 lg:p-12 shadow-xl hover:shadow-2xl hover:border-primary/20 transition-all duration-500"
+        <div class="bg-card/60 backdrop-blur-sm border border-primary/10 rounded-3xl p-8 lg:p-12 shadow-xl hover:shadow-2xl hover:border-primary/20 transition-all duration-500 card-lift"
             data-aos="fade-up" data-aos-delay="200">
           <div class="flex flex-col sm:flex-row items-start sm:items-center gap-8">
             <div class="shrink-0 w-24 h-24 lg:w-28 lg:h-28 rounded-2xl bg-white/10 backdrop-blur border border-white/20 flex items-center justify-center shadow-lg p-4">
@@ -480,7 +502,7 @@
 
         <!-- Project 1 -->
         <div class="project-card bg-card rounded-3xl overflow-hidden border border-primary/20 relative group" data-aos="fade-up">
-          <div class="h-48 bg-gradient-to-br from-primary/20 to-accent/20 relative">
+          <div class="project-image-gradient gradient-a h-48 relative overflow-hidden">
             <img src="resources/images/trafficcontrol.png" alt="Traffic Light" class="w-full h-full object-cover">
           </div>
           <div class="p-6">
@@ -494,8 +516,8 @@
 
           <!-- Top-Right Badges -->
           <div class="absolute top-3 right-3 flex flex-row gap-2">
-            <span class="px-3 py-1 bg-orange-500/20 text-orange-400 border border-orange-500/50 rounded-full text-xs font-semibold backdrop-blur-md">Individual</span>
-            <span class="px-3 py-1 bg-green-500/20 text-green-400 border border-green-500/50 rounded-full text-xs font-semibold backdrop-blur-md">Completed</span>
+            <span class="project-badge" data-type="individual">Individual</span>
+            <span class="project-badge" data-type="completed">Completed</span>
           </div>
 
           <!-- Bottom-Right Icons -->
@@ -508,7 +530,7 @@
 
         <!-- Project 2 -->
         <div class="project-card bg-card rounded-3xl overflow-hidden border border-primary/20 relative group" data-aos="fade-up" data-aos-delay="100">
-          <div class="h-48 bg-gradient-to-br from-red-500/20 to-purple-600/20 relative">
+          <div class="project-image-gradient gradient-b h-48 relative overflow-hidden">
             <img src="resources/images/passguard.png" alt="Security Shield" class="w-full h-full object-cover">
           </div>
           <div class="p-6">
@@ -520,14 +542,19 @@
             </div>
           </div>
           <div class="absolute top-3 right-3 flex flex-row gap-2">
-            <span class="px-3 py-1 bg-blue-500/20 text-blue-400 border border-blue-500/50 rounded-full text-xs font-semibold backdrop-blur-md">Personal</span>
-            <span class="px-3 py-1 bg-yellow-500/20 text-yellow-400 border border-yellow-500/50 rounded-full text-xs font-semibold backdrop-blur-md">Ongoing</span>
+            <span class="project-badge" data-type="personal">Personal</span>
+            <span class="project-badge" data-type="completed">Completed</span>
+          </div>
+          <div class="absolute bottom-4 right-4 flex gap-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            <a href="https://github.com/Senuka-Dinuwara/PassGuard" target="_blank" class="bg-white/10 backdrop-blur-md p-3 rounded-full hover:bg-white/20 transition">
+              <i class="fab fa-github text-xl text-white"></i>
+            </a>
           </div>
         </div>
 
         <!-- Project 3 -->
         <div class="project-card bg-card rounded-3xl overflow-hidden border border-primary/20 relative group" data-aos="fade-up" data-aos-delay="200">
-          <div class="h-48 bg-gradient-to-br from-cyan-500/20 to-purple-600/20 relative">
+          <div class="project-image-gradient gradient-a h-48 relative overflow-hidden">
             <img src="resources/images/boardgames.png" alt="Gamepad" class="w-full h-full object-cover">
           </div>
           <div class="p-6">
@@ -539,14 +566,14 @@
             </div>
           </div>
           <div class="absolute top-3 right-3 flex flex-row gap-2">
-            <span class="px-3 py-1 bg-blue-500/20 text-blue-400 border border-blue-500/50 rounded-full text-xs font-semibold backdrop-blur-md">Personal</span>
-            <span class="px-3 py-1 bg-red-500/20 text-red-400 border border-red-500/50 rounded-full text-xs font-semibold backdrop-blur-md">On Hold</span>
+            <span class="project-badge" data-type="personal">Personal</span>
+            <span class="project-badge" data-type="onhold">On Hold</span>
           </div>
         </div>
 
         <!-- Project 4 -->
         <div class="project-card bg-card rounded-3xl overflow-hidden border border-primary/20 relative group" data-aos="fade-up" data-aos-delay="300">
-          <div class="h-48 bg-gradient-to-br from-orange-500/20 to-purple-600/20 relative">
+          <div class="project-image-gradient gradient-b h-48 relative overflow-hidden">
             <img src="resources/images/sdg.png" alt="Globe" class="w-full h-full object-cover">
           </div>
           <div class="p-6">
@@ -557,8 +584,8 @@
             </div>
           </div>
           <div class="absolute top-3 right-3 flex flex-row gap-2">
-            <span class="px-3 py-1 bg-purple-500/20 text-purple-400 border border-purple-500/50 rounded-full text-xs font-semibold backdrop-blur-md">Group</span>
-            <span class="px-3 py-1 bg-green-500/20 text-green-400 border border-green-500/50 rounded-full text-xs font-semibold backdrop-blur-md">Completed</span>
+            <span class="project-badge" data-type="group">Group</span>
+            <span class="project-badge" data-type="completed">Completed</span>
           </div>
           <div class="absolute bottom-4 right-4 flex gap-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
             <a href="https://github.com/rivindu-ashinsa/sdg-awareness-site" target="_blank" class="bg-white/10 backdrop-blur-md p-3 rounded-full hover:bg-white/20 transition">
@@ -572,7 +599,7 @@
 
         <!-- Project 5 -->
         <div class="project-card bg-card rounded-3xl overflow-hidden border border-primary/20 relative group" data-aos="fade-up" data-aos-delay="400">
-          <div class="h-48 bg-gradient-to-br from-indigo-500/20 to-pink-600/20 relative">
+          <div class="project-image-gradient gradient-a h-48 relative overflow-hidden">
             <img src="resources/images/futuretech.png" alt="Rocket" class="w-full h-full object-cover">
           </div>
           <div class="p-6">
@@ -583,31 +610,55 @@
             </div>
           </div>
           <div class="absolute top-3 right-3 flex flex-row gap-2">
-            <span class="px-3 py-1 bg-blue-500/20 text-blue-400 border border-blue-500/50 rounded-full text-xs font-semibold backdrop-blur-md">Personal</span>
-            <span class="px-3 py-1 bg-red-500/20 text-red-400 border border-red-500/50 rounded-full text-xs font-semibold backdrop-blur-md">On Hold</span>
+            <span class="project-badge" data-type="personal">Personal</span>
+            <span class="project-badge" data-type="onhold">On Hold</span>
           </div>
         </div>
 
         <!-- Project 6 -->
         <div class="project-card bg-card rounded-3xl overflow-hidden border border-primary/20 relative group" data-aos="fade-up" data-aos-delay="500">
-          <div class="h-48 bg-gradient-to-br from-teal-500/20 to-purple-600/20 relative">
+          <div class="project-image-gradient gradient-b h-48 relative overflow-hidden">
             <img src="resources/images/protegopath.png" alt="Protego Path" class="w-full h-full object-cover">
           </div>
           <div class="p-6">
             <h3 class="text-xl font-bold text-primary mb-3">Protego Path</h3>
             <p class="text-sm text-gray-300 mb-4">Offline hiking safety app</p>
             <div class="flex flex-wrap gap-2">
-              <span class="px-3 py-1 bg-primary/20 rounded-full text-xs">HTML/CSS/JS</span>
+              <span class="px-3 py-1 bg-primary/20 rounded-full text-xs">HTML/CSS/JS/Dart</span>
               <span class="px-3 py-1 bg-accent/20 rounded-full text-xs">Flutter</span>
             </div>
           </div>
           <div class="absolute top-3 right-3 flex flex-row gap-2">
-            <span class="px-3 py-1 bg-purple-500/20 text-purple-400 border border-purple-500/50 rounded-full text-xs font-semibold backdrop-blur-md">Group</span>
-            <span class="px-3 py-1 bg-yellow-500/20 text-yellow-400 border border-yellow-500/50 rounded-full text-xs font-semibold backdrop-blur-md">Ongoing</span>
+            <span class="project-badge" data-type="group">Group</span>
+            <span class="project-badge" data-type="onhold">On Hold</span>
           </div>
           <div class="absolute bottom-4 right-4 flex gap-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
             <a href="https://protegopath.com" target="_blank" class="bg-white/10 backdrop-blur-md p-3 rounded-full hover:bg-white/20 transition">
               <i class="fas fa-external-link-alt text-xl text-white"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- Project 7 -->
+        <div class="project-card bg-card rounded-3xl overflow-hidden border border-primary/20 relative group" data-aos="fade-up" data-aos-delay="500">
+          <div class="project-image-gradient gradient-a h-48 relative overflow-hidden">
+            <img src="resources/images/timetablemaker.png" alt="Protego Path" class="w-full h-full object-cover">
+          </div>
+          <div class="p-6">
+            <h3 class="text-xl font-bold text-primary mb-3">Timetable-Maker</h3>
+            <p class="text-sm text-gray-300 mb-4">An automated, conflict-free academic scheduling desktop application.</p>
+            <div class="flex flex-wrap gap-2">
+              <span class="px-3 py-1 bg-primary/20 rounded-full text-xs">Java</span>
+              <span class="px-3 py-1 bg-accent/20 rounded-full text-xs">Swing</span>
+            </div>
+          </div>
+          <div class="absolute top-3 right-3 flex flex-row gap-2">
+            <span class="project-badge" data-type="personal">Personal</span>
+            <span class="project-badge" data-type="completed">Completed</span>
+          </div>
+          <div class="absolute bottom-4 right-4 flex gap-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            <a href="https://github.com/Senuka-Dinuwara/Timetable-Maker" target="_blank" class="bg-white/10 backdrop-blur-md p-3 rounded-full hover:bg-white/20 transition">
+              <i class="fab fa-github text-xl text-white"></i>
             </a>
           </div>
         </div>
@@ -855,10 +906,11 @@
       <a href="https://www.linkedin.com/in/senuka-dinuwara/" class="hover:text-primary"><i class="fab fa-linkedin"></i></a>
       <a href="mailto:senudinubro@gmail.com" class="hover:text-primary"><i class="fas fa-envelope"></i></a>
     </div>
-    <p class="text-gray-400">© 2025 Senuka Dinuwara. All rights reserved.</p>
+    <p class="text-gray-400">© 2026 Senuka Dinuwara. All rights reserved.</p>
   </footer>
 
   
   <script src="script.js"></script>
+  <script defer src="chat.js"></script>
 </body>
 </html>

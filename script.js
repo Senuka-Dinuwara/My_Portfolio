@@ -4,9 +4,17 @@ AOS.init({ duration: 1000, once: true });
 window.addEventListener('load', () => {
   setTimeout(() => {
     document.getElementById('preloader').classList.add('hide');
+    document.body.classList.remove('loading');
+    document.documentElement.classList.remove('loading');
+    const chatbot = document.getElementById('chatbot');
+    if (chatbot) chatbot.classList.add('ready');
+    if (!window.location.hash) {
+      const hero = document.getElementById('home');
+      if (hero) hero.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
   }, 900);
 });
-	
+
 // Animate skill bars when they enter viewport
 const observer = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
@@ -46,10 +54,12 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 });
 
 // Resume download popup
-const resumeLink = document.querySelector('a[href="resources/resume.pdf"]');
+const resumeLink = document.querySelector('a[href=""]');
 if (resumeLink) {
   resumeLink.addEventListener('click', (e) => {
     e.preventDefault();
     alert('Resume will be available soon');
   });
 }
+
+/* Chatbot moved to chat.js */
